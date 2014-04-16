@@ -69,7 +69,7 @@ public class OptimizationSet extends Individual<OptimizationSet> {
 	}
 
 	@Override
-	public OptimizationSet crossover(OptimizationSet y) {
+	public List<OptimizationSet> reproduction(OptimizationSet y) {
 		
 		Random r = new Random();
 		
@@ -92,7 +92,11 @@ public class OptimizationSet extends Individual<OptimizationSet> {
 		}
 		
 		String[] sonOptimizations = newOptimizations.toArray(new String[0]);
-		return new OptimizationSet(sonOptimizations);
+		
+		List<OptimizationSet> list = new ArrayList<>();
+		OptimizationSet optimizationSet = new OptimizationSet(sonOptimizations);
+		list.add(optimizationSet);
+		return list;
 	}
 
 	private String[] getOptimizations() {

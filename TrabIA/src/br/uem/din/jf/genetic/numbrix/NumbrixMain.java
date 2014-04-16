@@ -13,15 +13,17 @@ public class NumbrixMain {
 		
 		Map initialMap = NumbrixUtils.extractMap(numbrixStr);
 		
-		Map ascMap = new Map(initialMap);
-		fillAsc(ascMap);
-		
-		Map descMap = new Map(initialMap);
-		fillDesc(descMap);
+//		Map ascMap = new Map(initialMap);
+//		fillAsc(ascMap);
+//		
+//		Map descMap = new Map(initialMap);
+//		fillDesc(descMap);
 		
 		PriorityQueue<Solution> population = new PriorityQueue<>();
-		population.add(new Solution(ascMap));
-		population.add(new Solution(descMap));
+		Solution solution = new Solution(initialMap);
+		population.add(solution);
+		population.addAll(solution.reproduction(null));
+//		population.add(new Solution(descMap));
 
 		GeneticAlgorithm<Solution> genetic = new GeneticAlgorithm<>(population);
 		

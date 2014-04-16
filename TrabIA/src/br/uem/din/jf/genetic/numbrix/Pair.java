@@ -42,5 +42,21 @@ public class Pair {
 			return false;
 		return true;
 	}
+
+	public Pair up() {
+		return new Pair(x-1, y);
+	}
+
+	public Pair down() {
+		return new Pair(x+1, y);
+	}
+
+	public Pair left() {
+		return new Pair(x, y-1);
+	}
+
+	public Pair right() {
+		return new Pair(x, y+1);
+	}
 	
 }

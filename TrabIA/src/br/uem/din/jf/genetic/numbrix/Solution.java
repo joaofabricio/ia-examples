@@ -1,5 +1,7 @@
 package br.uem.din.jf.genetic.numbrix;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import br.uem.din.jf.genetic.Individual;
@@ -29,7 +31,7 @@ public class Solution extends Individual<Solution> {
 		for (int i = 0; i < swaps; i++) {
 			Pair source = new Pair(random.nextInt(Map.MAX_ROWS), random.nextInt(Map.MAX_COLS));
 			Pair dest = new Pair(random.nextInt(Map.MAX_ROWS), random.nextInt(Map.MAX_COLS));
-			map.swap(source, dest);
+//			map.swap(source, dest);
 		}
 		
 		
@@ -41,12 +43,15 @@ public class Solution extends Individual<Solution> {
 	}
 
 	@Override
-	public Solution crossover(Solution y) {
+	public List<Solution> reproduction(Solution y) {
+		List<Solution> newSolutions = new ArrayList<>();
 		
-		Map newMap = map.cross(y.map);
+		List<Map> nexts = map.nexts();
+		for (Map map : nexts) {
+			newSolutions.add(new Solution(map));
+		}
 		
-		
-		return new Solution(newMap);
+		return newSolutions;
 //		return new Solution(this.map);
 	}
 

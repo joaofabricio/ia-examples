@@ -1,5 +1,7 @@
 package br.uem.din.jf.genetic.chars;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import br.uem.din.jf.genetic.Individual;
@@ -57,7 +59,7 @@ public class Caracteres extends Individual<Caracteres> {
 	}
 	
 	@Override
-	public Caracteres crossover(Caracteres y) {
+	public List<Caracteres> reproduction(Caracteres y) {
 		Random r = new Random();
 		
 		int corte1 = r.nextInt((this.getFound().length()/2) -2 + 1);
@@ -67,7 +69,9 @@ public class Caracteres extends Individual<Caracteres> {
 		newFound += corte2<=y.getFound().length()? y.getFound().substring(corte1, corte2) : y.getFound();
 		newFound += this.getFound().substring(corte2, this.getFound().length());
 		
-		return new Caracteres(newFound);
+		List<Caracteres> list = new ArrayList<>();
+		list.add(new Caracteres(newFound));
+		return list;
 		
 		
 	}

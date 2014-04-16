@@ -2,7 +2,9 @@ package br.uem.din.jf.genetic;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 public class GeneticAlgorithm<T extends Individual<T>> {
 
@@ -21,20 +23,24 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 		int generation = 0;
 		while (generation++ < maxGenerations &&
 				!hasTheSolution()) {
-			T x = selection(null);
-			T y = selection(x);
-			T sonXY = reproduction(x, y);
-			T sonYX = reproduction(y, x);
+			T x = selection();
+			T y = selection();
+			List<T> sonsXY = reproduction(x, y);
+			List<T> sonsYX = reproduction(y, x);
 			if (propability()) {
-				sonXY.mutate();
-				sonYX.mutate();
+				for (T yx : sonsYX) {
+					yx.mutate();
+				}
+				for (T xy : sonsYX) {
+					xy.mutate();
+				}
 			}
 			
-			population.add(sonXY);
-			population.add(sonYX);
+			population.addAll(sonsXY);
+			population.addAll(sonsYX);
 			
-			System.out.println("generation: "+generation+" ------- best: "+ getBest().getAdaptation()+" ------ found: "+sonXY.getAdaptation());
-			System.out.println("generation: "+generation+" ------- best: "+ getBest().getAdaptation()+" ------ found: "+sonYX.getAdaptation());
+			System.out.println("generation: "+generation+" ------- best: "+ getBest().getAdaptation());
+			System.out.println(getBest());
 			removeWorsts();
 		}
 		
@@ -62,15 +68,19 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 		return rand < 0.6;
 	}
 
-	private T reproduction(T x, T y) {
-		return x.crossover(y);
+	private List<T> reproduction(T x, T y) {
+		return x.reproduction(y);
 	}
 
-	private T selection(T selected) {
+	private T selection() {
+		Random r = new Random();
+		int n = r.nextInt(population.size());
+		
+		int i = 0;
 		Iterator<T> iterator = population.iterator();
 		while (iterator.hasNext()) {
 			T next = iterator.next();
-			if (!next.equals(selected)) {
+			if (i++ == n) {
 				return next;
 			}
 		}
