@@ -1,7 +1,6 @@
 package br.uem.din.jf.genetic.chars;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.PriorityQueue;
 
 import br.uem.din.jf.genetic.GeneticAlgorithm;
@@ -9,7 +8,7 @@ import br.uem.din.jf.genetic.GeneticAlgorithm;
 public class MainChars {
 
 	public static void main(String[] args) throws IOException {
-		Collection<Caracteres> initialPopulation = new PriorityQueue<>();
+		PriorityQueue<Caracteres> initialPopulation = new PriorityQueue<>();
 		
 		Caracteres e = new Caracteres("Alain maadfasdfasr");
 		initialPopulation.add(e);

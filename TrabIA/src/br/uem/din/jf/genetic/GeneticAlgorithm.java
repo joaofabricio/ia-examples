@@ -2,13 +2,14 @@ package br.uem.din.jf.genetic;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class GeneticAlgorithm<T extends Individual<T>> {
 
 	private Collection<T> population;
-	private int maxGenerations = 500;
+	private int maxGenerations = 500000000;
 
-	public GeneticAlgorithm(Collection<T> initialPopulation) {
+	public GeneticAlgorithm(PriorityQueue<T> initialPopulation) {
 		if (initialPopulation.size() < 2) {
 			throw new RuntimeException("A população inicial deve ter pelo menos 2 indivíduos");
 		}

@@ -1,7 +1,6 @@
 package br.uem.din.jf.optimizationsset;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -12,7 +11,7 @@ public class MainOptimizationsSet {
 
 	public static void main(String[] args) {
 		Random r = new Random();
-		Collection<OptimizationSet> initialPopulation = new PriorityQueue<OptimizationSet>();
+		PriorityQueue<OptimizationSet> initialPopulation = new PriorityQueue<OptimizationSet>();
 		for (int t = 0; t < 2; t++) {
 			int optAmount = r.nextInt(30) + 1;
 			List<String> optSet = new ArrayList<>();
