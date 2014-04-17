@@ -54,7 +54,7 @@ public class Map {
 	private boolean checkCorrect(int i, int j) {
 		Integer value = map[i][j];
 		if (value == null)
-			return false;
+			return true;
 		int points = 0;
 		if (i != 0)
 			points += check(value, i-1, j)? 1 : 0;
@@ -157,7 +157,10 @@ public class Map {
 	public List<Map> nexts() {
 		System.out.println(this);
 		List<Map> list = new ArrayList<>();
-		Pair pos = getPosition(getSmallestValueNotUsed()-1);
+		Integer value = getSmallestValueNotUsed();
+		Pair pos = getPosition(value-1);
+
+		boolean fixed = fixed(getPosition(value+1));
 		
 		Map up = new Map(this);
 		if (up.putIndex(pos.up()))
@@ -175,7 +178,21 @@ public class Map {
 		if (right.putIndex(pos.right()))
 			list.add(right);
 		
+		if (fixed && list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+//			for (Map map : list) {
+				Map map = list.get(i);
+				if (!map.checkCorrect(map.getPosition(value))) {
+					list.remove(map);
+				}
+			}
+		}
+		
 		return list;
+	}
+
+	private boolean checkCorrect(Pair position) {
+		return checkCorrect(position.getX(), position.getY());
 	}
 
 	private boolean putIndex(Pair position) {

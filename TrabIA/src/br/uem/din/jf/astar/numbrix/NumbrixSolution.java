@@ -33,7 +33,7 @@ public class NumbrixSolution extends SearchSpace<NumbrixSolution> {
 
 	@Override
 	public boolean hasBestSolution() {
-		return getG() == 36;
+		return getG() == Map.MAX_VALUE && map.getSmallestValueNotUsed() > Map.MAX_VALUE;
 	}
 
 	@Override
