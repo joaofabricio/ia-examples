@@ -74,9 +74,7 @@ public class Map {
 	}
 	
 	public String toString() {
-		StringBuffer sb = new StringBuffer("index: ");
-		sb.append(getSmallestValueNotUsed())
-		  .append("\n");
+		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				if (map[i][j] != null)
@@ -91,7 +89,7 @@ public class Map {
 	}
 
 	public Integer getSmallestValueNotUsed() {
-		Integer i = 0;
+		Integer i = 1;
 		while (hasValue(i)) {
 			i++;
 		}
@@ -146,30 +144,6 @@ public class Map {
 		return map[pair.getX()][pair.getY()];
 	}
 
-	public Map cross(Map other) {
-		Map newMap = new Map(this);
-		for (int i = 0; i <= corrections(); i++) {
-			Pair posSource = getIncorrection(i);
-			Pair posDest = other.getIncorrection(i);
-			newMap.swap(posSource, posDest);
-		}
-		return newMap;
-	}
-
-	private Pair getIncorrection(int k) {
-		int count = 0;
-		for (int i = 0; i < map.length && count <= k; i++) {
-			for (int j = 0; j < map[i].length && count <= k; j++) {
-				Pair pair = new Pair(i, j);
-				if (!check(getValue(pair), i, j)) {
-					if (count++ == k)
-						return pair; 
-				}
-			}
-		}
-		return null;
-	}
-
 	private Pair getPosition(Integer value) {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
@@ -181,6 +155,7 @@ public class Map {
 	}
 
 	public List<Map> nexts() {
+		System.out.println(this);
 		List<Map> list = new ArrayList<>();
 		Pair pos = getPosition(getSmallestValueNotUsed()-1);
 		

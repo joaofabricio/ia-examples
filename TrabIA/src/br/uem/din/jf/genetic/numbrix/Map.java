@@ -16,18 +16,14 @@ public class Map {
 
 	private List<Pair> fixedPositions;
 	
-	private int index = 0;
-
 	public Map(Integer[][] map, List<Pair> fixedPositions) {
 		this.map = map;
 		this.fixedPositions = fixedPositions;
-		while (hasValue(++index)){}
 	}
 	
 	public Map(Map map) {
 		this.map = cloneMap(map.map);
 		this.fixedPositions = map.fixedPositions;
-		this.index = map.index;
 	}
 
 	private Integer[][] cloneMap(Integer[][] map) {
@@ -59,26 +55,25 @@ public class Map {
 			return false;
 		int points = 0;
 		if (i != 0)
-			points += check(value, i-1, j)? 1 : 0;
+			points += check(value, new Pair(i-1, j))? 1 : 0;
 		if (i != MAX_ROWS-1)
-			points += check(value, i+1, j)? 1 : 0;
+			points += check(value, new Pair(i+1, j))? 1 : 0;
 		if (j != 0)
-			points += check(value, i, j-1)? 1 : 0;
+			points += check(value, new Pair(i, j-1))? 1 : 0;
 		if (j != MAX_COLS-1)
-			points += check(value, i, j+1)? 1 : 0;
+			points += check(value, new Pair(i, j+1))? 1 : 0;
 		
 		return points == 2 ||
 				((value == 1 || value == MAX_VALUE) && points == 1);
 	}
 
-	private boolean check(Integer value, int i, int j) {
-		return map[i][j] != null && (value == map[i][j]-1 || value == map[i][j]+1);
+	private boolean check(Integer value, Pair positionToCheck) {
+		Integer valueToCheck = getValue(positionToCheck);
+		return valueToCheck != null && (value == valueToCheck-1 || value == valueToCheck+1);
 	}
 	
 	public String toString() {
-		StringBuffer sb = new StringBuffer("index: ");
-		sb.append(index)
-		  .append("\n");
+		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				if (map[i][j] != null)
@@ -121,7 +116,7 @@ public class Map {
 		}
 		if (position.getX() < 0 || position.getX() >= MAX_ROWS ||
 			position.getY() < 0 || position.getY() >= MAX_COLS ||
-			getValue(position) != null)
+			fixed(position))
 			return false;
 		
 		map[position.getX()][position.getY()] = value;
@@ -129,11 +124,12 @@ public class Map {
 	}
 
 	public void swap(Pair source, Pair dest) {
-		if (source == null || dest == null ||
-				fixed(source) || fixed(dest) || source.equals(dest))
-			return;
 		Integer valueDest = getValue(dest);
 		Integer valueSource = getValue(source);
+		if ((valueSource == null && valueDest == null) ||
+				dest == null || source == null ||
+				fixed(source) || fixed(dest) || source.equals(dest))
+			return;
 		put(null, dest);
 		put(null, source);
 		put(valueSource, dest);
@@ -145,25 +141,28 @@ public class Map {
 	}
 
 	private Integer getValue(Pair pair) {
-		return map[pair.getX()][pair.getY()];
+		return pair != null? map[pair.getX()][pair.getY()] : null;
 	}
 
-	public Map cross(Map other) {
+	public List<Map> cross(Map other) {
 		Map newMap = new Map(this);
+		int otherCorrections = other.corrections();
 		for (int i = 0; i <= corrections(); i++) {
 			Pair posSource = getIncorrection(i);
-			Pair posDest = other.getIncorrection(i);
+			Pair posDest = other.getIncorrection(otherCorrections-i);
 			newMap.swap(posSource, posDest);
 		}
-		return newMap;
+		List<Map> list = new ArrayList<>();
+		list.add(newMap);
+		return list;
 	}
 
-	private Pair getIncorrection(int k) {
+	public Pair getIncorrection(int k) {
 		int count = 0;
 		for (int i = 0; i < map.length && count <= k; i++) {
 			for (int j = 0; j < map[i].length && count <= k; j++) {
 				Pair pair = new Pair(i, j);
-				if (!check(getValue(pair), i, j)) {
+				if (!checkCorrect(i, j)) {
 					if (count++ == k)
 						return pair; 
 				}
@@ -182,33 +181,4 @@ public class Map {
 		return null;
 	}
 
-	public List<Map> nexts() {
-		List<Map> list = new ArrayList<>();
-		Pair pos = getPosition(index-1);
-		
-		Map up = new Map(this);
-		if (up.putIndex(pos.up()))
-			list.add(up);
-
-		Map down = new Map(this);
-		if (down.putIndex(pos.down()))
-			list.add(down);
-		
-		Map left = new Map(this);
-		if (left.putIndex(pos.left()))
-			list.add(left);
-		
-		Map right = new Map(this);
-		if (right.putIndex(pos.right()))
-			list.add(right);
-		
-		return list;
-	}
-
-	private boolean putIndex(Pair position) {
-		boolean put = put(index, position);
-		if (put)
-			while (hasValue(++index)){}
-		return put;
-	}
 }

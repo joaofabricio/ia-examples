@@ -3,8 +3,8 @@ package br.uem.din.jf.astar.numbrix;
 import java.io.File;
 
 import br.uem.din.jf.astar.AStar;
-import br.uem.din.jf.genetic.numbrix.Map;
-import br.uem.din.jf.genetic.numbrix.NumbrixUtils;
+import br.uem.din.jf.astar.numbrix.Map;
+import br.uem.din.jf.astar.numbrix.NumbrixUtils;
 import br.uem.din.jf.util.FileUtils;
 
 public class NumbrixMainAstar {

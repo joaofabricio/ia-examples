@@ -6,12 +6,12 @@ import java.util.Random;
 
 import br.uem.din.jf.genetic.Individual;
 
-public class Solution extends Individual<Solution> {
+public class NumbrixSolution extends Individual<NumbrixSolution> {
 	
-	private static final int MAX_SWAPS = 5;
+	private static final int MAX_SWAPS = 15;
 	private Map map;
 	
-	public Solution(Map map) {
+	public NumbrixSolution(Map map) {
 		this.map = new Map(map);
 	}
 
@@ -29,9 +29,10 @@ public class Solution extends Individual<Solution> {
 		int swaps = random.nextInt(MAX_SWAPS) + 1;
 		
 		for (int i = 0; i < swaps; i++) {
-			Pair source = new Pair(random.nextInt(Map.MAX_ROWS), random.nextInt(Map.MAX_COLS));
+			Pair incorrection = map.getIncorrection(i);
+//			Pair source = new Pair(random.nextInt(Map.MAX_ROWS), random.nextInt(Map.MAX_COLS));
 			Pair dest = new Pair(random.nextInt(Map.MAX_ROWS), random.nextInt(Map.MAX_COLS));
-//			map.swap(source, dest);
+			map.swap(incorrection, dest);
 		}
 		
 		
@@ -43,12 +44,12 @@ public class Solution extends Individual<Solution> {
 	}
 
 	@Override
-	public List<Solution> reproduction(Solution y) {
-		List<Solution> newSolutions = new ArrayList<>();
+	public List<NumbrixSolution> reproduction(NumbrixSolution y) {
+		List<NumbrixSolution> newSolutions = new ArrayList<>();
 		
-		List<Map> nexts = map.nexts();
+		List<Map> nexts = map.cross(y.map);
 		for (Map map : nexts) {
-			newSolutions.add(new Solution(map));
+			newSolutions.add(new NumbrixSolution(map));
 		}
 		
 		return newSolutions;

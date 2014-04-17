@@ -40,7 +40,8 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 			population.addAll(sonsYX);
 			
 			System.out.println("generation: "+generation+" ------- best: "+ getBest().getAdaptation());
-			System.out.println(getBest());
+			System.out.println("generated: "+ sonsXY.get(0).getAdaptation());
+//			System.out.println(getBest());
 			removeWorsts();
 		}
 		
@@ -52,8 +53,10 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 		
 		Iterator<T> iterator = population.iterator();
 		Object worst = null;
-		while (iterator.hasNext()) {
+		int i = 0;
+		while (i<2) {//iterator.hasNext()) {
 			worst = iterator.next();
+			i++;
 		}
 		population.remove(worst);
 		
@@ -74,7 +77,7 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 
 	private T selection() {
 		Random r = new Random();
-		int n = r.nextInt(population.size());
+		int n = r.nextInt(Math.min(10, population.size()));
 		
 		int i = 0;
 		Iterator<T> iterator = population.iterator();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.uem.din.jf.astar.SearchSpace;
-import br.uem.din.jf.genetic.numbrix.Map;
+import br.uem.din.jf.astar.numbrix.Map;
 
 public class NumbrixSolution extends SearchSpace<NumbrixSolution> {
 
@@ -21,7 +21,6 @@ public class NumbrixSolution extends SearchSpace<NumbrixSolution> {
 
 	@Override
 	public List<NumbrixSolution> sons() {
-		// TODO Auto-generated method stub
 		List<NumbrixSolution> newSolutions = new ArrayList<>();
 		
 		List<Map> nexts = map.nexts();
