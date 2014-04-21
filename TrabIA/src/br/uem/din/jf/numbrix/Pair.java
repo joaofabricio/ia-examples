@@ -3,7 +3,7 @@ package br.uem.din.jf.numbrix;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import br.uem.din.jf.csp.NumbrixSolutionCSP;
+import br.uem.din.jf.csp.Map;
 
 public class Pair {
 
@@ -68,11 +68,11 @@ public class Pair {
 		Collection<Pair> list = new ArrayList<>();
 		if (x!=0)
 			list.add(up());
-		if (x!=NumbrixSolutionCSP.MAX_ROWS-1)
+		if (x!=Map.MAX_ROWS-1)
 			list.add(down());
 		if (y!=0)
 			list.add(left());
-		if (y!=NumbrixSolutionCSP.MAX_COLS-1)
+		if (y!=Map.MAX_COLS-1)
 			list.add(right());
 		return list;
 	}

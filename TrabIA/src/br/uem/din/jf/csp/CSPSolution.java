@@ -1,15 +1,13 @@
 package br.uem.din.jf.csp;
 
-import java.util.Set;
+import java.util.Collection;
 
-import br.uem.din.jf.numbrix.Pair;
 
 public abstract class CSPSolution {
+	
+	public abstract boolean consistent();
 
-	public abstract boolean changeRange(Pair pair);
+	public abstract Collection<CSPSolution> nexts();
 
-	public abstract Set<Pair> populate(Set<Pair> fixeds);
-
-	public abstract Set<Pair> getFixeds();
 
 }

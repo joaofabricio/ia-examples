@@ -1,4 +1,4 @@
-package br.uem.din.jf.astar.numbrix;
+package br.uem.din.jf.csp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import br.uem.din.jf.numbrix.NumbrixProperties;
 import br.uem.din.jf.numbrix.Pair;
 
-
 public class Map {
+	
 
 	public static final Integer MAX_COLS = NumbrixProperties.getColsNumber();
 
@@ -55,7 +55,7 @@ public class Map {
 	private boolean checkCorrect(int i, int j) {
 		Integer value = map[i][j];
 		if (value == null)
-			return true;
+			return false;
 		int points = 0;
 		if (i != 0)
 			points += check(value, i-1, j)? 1 : 0;

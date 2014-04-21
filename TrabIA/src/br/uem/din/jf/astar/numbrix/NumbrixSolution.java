@@ -16,7 +16,7 @@ public class NumbrixSolution extends SearchSpace<NumbrixSolution> {
 
 	@Override
 	public int getG() {
-		return Map.MAX_VALUE - map.corrections();
+		return Map.MAX_VALUE - map.getIncorrections();
 	}
 
 	@Override
