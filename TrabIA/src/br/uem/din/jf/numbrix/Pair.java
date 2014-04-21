@@ -1,4 +1,9 @@
-package br.uem.din.jf.astar.numbrix;
+package br.uem.din.jf.numbrix;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import br.uem.din.jf.csp.NumbrixSolutionCSP;
 
 public class Pair {
 
@@ -59,4 +64,21 @@ public class Pair {
 		return new Pair(x, y+1);
 	}
 	
+	public Collection<Pair> adjacent() {
+		Collection<Pair> list = new ArrayList<>();
+		if (x!=0)
+			list.add(up());
+		if (x!=NumbrixSolutionCSP.MAX_ROWS-1)
+			list.add(down());
+		if (y!=0)
+			list.add(left());
+		if (y!=NumbrixSolutionCSP.MAX_COLS-1)
+			list.add(right());
+		return list;
+	}
+	
+	@Override
+	public String toString() {
+		return "Pair("+x+", "+y+")";
+	}
 }

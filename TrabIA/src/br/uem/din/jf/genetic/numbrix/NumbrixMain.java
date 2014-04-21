@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.PriorityQueue;
 
 import br.uem.din.jf.genetic.GeneticAlgorithm;
+import br.uem.din.jf.numbrix.NumbrixUtils;
+import br.uem.din.jf.numbrix.Pair;
 import br.uem.din.jf.util.FileUtils;
 
 public class NumbrixMain {
@@ -11,7 +13,7 @@ public class NumbrixMain {
 	public static void main(String[] args) {
 		String numbrixStr = FileUtils.getFileContents(new File("numbrix.txt"));
 		
-		Map initialMap = NumbrixUtils.extractMap(numbrixStr);
+		Map initialMap = NumbrixUtils.extractGeneticMap(numbrixStr);
 		
 		Map ascMap = new Map(initialMap);
 		fillAsc(ascMap);

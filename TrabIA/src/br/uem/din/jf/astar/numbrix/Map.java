@@ -3,7 +3,8 @@ package br.uem.din.jf.astar.numbrix;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.uem.din.jf.genetic.numbrix.NumbrixProperties;
+import br.uem.din.jf.numbrix.NumbrixProperties;
+import br.uem.din.jf.numbrix.Pair;
 
 
 public class Map {

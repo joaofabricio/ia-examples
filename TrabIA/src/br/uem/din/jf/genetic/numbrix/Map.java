@@ -3,6 +3,9 @@ package br.uem.din.jf.genetic.numbrix;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.uem.din.jf.numbrix.NumbrixProperties;
+import br.uem.din.jf.numbrix.Pair;
+
 
 public class Map {
 
@@ -34,11 +37,11 @@ public class Map {
 		return ret;
 	}
 
-	public int corrections() {
+	public int getIncorrections() {
 		int faults = 0;
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				if (!fixed(i, j) && !checkCorrect(i,j))
+				if (!checkCorrect(i,j) && !fixed(i, j))
 					faults++;
 			}
 		}
@@ -146,8 +149,8 @@ public class Map {
 
 	public List<Map> cross(Map other) {
 		Map newMap = new Map(this);
-		int otherCorrections = other.corrections();
-		for (int i = 0; i <= corrections(); i++) {
+		int otherCorrections = other.getIncorrections();
+		for (int i = 0; i <= getIncorrections(); i++) {
 			Pair posSource = getIncorrection(i);
 			Pair posDest = other.getIncorrection(otherCorrections-i);
 			newMap.swap(posSource, posDest);

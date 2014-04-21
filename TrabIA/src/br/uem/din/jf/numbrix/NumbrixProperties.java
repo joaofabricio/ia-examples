@@ -1,4 +1,4 @@
-package br.uem.din.jf.genetic.numbrix;
+package br.uem.din.jf.numbrix;
 
 import java.io.FileReader;
 import java.io.IOException;

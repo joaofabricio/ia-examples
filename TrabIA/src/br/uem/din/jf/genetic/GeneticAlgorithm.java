@@ -8,8 +8,11 @@ import java.util.Random;
 
 public class GeneticAlgorithm<T extends Individual<T>> {
 
+//	private static final int MAX_STAGNATION_TO_MUTATE = 50;
 	private Collection<T> population;
-	private int maxGenerations = 500000000;
+	private int maxGenerations = 999999;
+	private int maxStagnation = 99999;
+	private int stagnation = 0;
 
 	public GeneticAlgorithm(PriorityQueue<T> initialPopulation) {
 		if (initialPopulation.size() < 2) {
@@ -21,7 +24,9 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 	public T execute() {
 		
 		int generation = 0;
+		T lastBest = null;
 		while (generation++ < maxGenerations &&
+				stagnation < maxStagnation &&
 				!hasTheSolution()) {
 			T x = selection();
 			T y = selection();
@@ -39,12 +44,22 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 			population.addAll(sonsXY);
 			population.addAll(sonsYX);
 			
-			System.out.println("generation: "+generation+" ------- best: "+ getBest().getAdaptation());
-			System.out.println("generated: "+ sonsXY.get(0).getAdaptation());
-//			System.out.println(getBest());
+			T best = getBest();
+			if (best.equals(lastBest))
+				stagnation++;
+			else
+				stagnation = 0;
+			System.out.println("generation: "+generation+" stagnation: "+stagnation+" ------- best: "+ best.getAdaptation());
+//			System.out.println("generated: "+ sonsXY.get(0).getAdaptation());
+			System.out.println(population.size());
+			System.out.println(best);
 			removeWorsts();
+			lastBest = best;
 		}
 		
+		if (!getBest().hasBestSolution()) {
+			System.out.println("fail!");
+		}
 		
 		return getBest();
 	}
@@ -68,7 +83,8 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 
 	private boolean propability() {
 		double rand = Math.random();
-		return rand < 0.6;
+		return rand < stagnation / maxStagnation;
+//		return false;
 	}
 
 	private List<T> reproduction(T x, T y) {
