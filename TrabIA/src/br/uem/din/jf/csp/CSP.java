@@ -1,24 +1,24 @@
 package br.uem.din.jf.csp;
 
 import java.util.Collection;
-import java.util.Stack;
 
 public class CSP {
 	
 	public CSPSolution execute(CSPSolution actualSolution) {
-		Stack<CSPSolution> solutions = new Stack<>();
-		solutions.push(actualSolution);
+		System.out.println(actualSolution);
+		if (actualSolution.consistent()) 
+			return actualSolution;
 		
-		while(!actualSolution.consistent()) {
-			Collection<CSPSolution> nexts = actualSolution.nexts();
-			solutions.addAll(nexts);
-			
-			System.out.println(actualSolution);
-			actualSolution = solutions.pop();
+		Collection<CSPSolution> nexts = actualSolution.nexts();
+		
+		for (CSPSolution cspSolution : nexts) {
+			CSPSolution execution = execute(cspSolution);
+			if (execution != null)
+				return execution;
 		}
 		
+		return null;
 		
-		return actualSolution;
 	}
 
 }

@@ -1,13 +1,14 @@
-package br.uem.din.jf.astar.numbrix;
+package br.uem.din.jf.numbrix;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.uem.din.jf.numbrix.NumbrixProperties;
 import br.uem.din.jf.numbrix.Pair;
 
-
 public class Map {
+	
 
 	public static final Integer MAX_COLS = NumbrixProperties.getColsNumber();
 
@@ -55,7 +56,7 @@ public class Map {
 	private boolean checkCorrect(int i, int j) {
 		Integer value = map[i][j];
 		if (value == null)
-			return true;
+			return false;
 		int points = 0;
 		if (i != 0)
 			points += check(value, i-1, j)? 1 : 0;
@@ -68,6 +69,35 @@ public class Map {
 		
 		return points == 2 ||
 				((value == 1 || value == MAX_VALUE) && points == 1);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((fixedPositions == null) ? 0 : fixedPositions.hashCode());
+		result = prime * result + Arrays.hashCode(map);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Map other = (Map) obj;
+		if (fixedPositions == null) {
+			if (other.fixedPositions != null)
+				return false;
+		} else if (!fixedPositions.equals(other.fixedPositions))
+			return false;
+		if (!Arrays.deepEquals(map, other.map))
+			return false;
+		return true;
 	}
 
 	private boolean check(Integer value, int i, int j) {
@@ -156,12 +186,11 @@ public class Map {
 	}
 
 	public List<Map> nexts() {
-		System.out.println(this);
 		List<Map> list = new ArrayList<>();
 		Integer value = getSmallestValueNotUsed();
 		Pair pos = getPosition(value-1);
 
-		boolean fixed = fixed(getPosition(value+1));
+		boolean nextIsfixed = fixed(getPosition(value+1));
 		
 		Map up = new Map(this);
 		if (up.putIndex(pos.up()))
@@ -179,14 +208,15 @@ public class Map {
 		if (right.putIndex(pos.right()))
 			list.add(right);
 		
-		if (fixed && list.size() > 0) {
-			for (int i = 0; i < list.size(); i++) {
-//			for (Map map : list) {
-				Map map = list.get(i);
+		if (nextIsfixed && list.size() > 0) {
+				
+			List<Map> toRemove = new ArrayList<>();
+			for (Map map : list) {
 				if (!map.checkCorrect(map.getPosition(value))) {
-					list.remove(map);
+					toRemove.add(map);
 				}
 			}
+			list.removeAll(toRemove);
 		}
 		
 		return list;
@@ -198,5 +228,28 @@ public class Map {
 
 	private boolean putIndex(Pair position) {
 		return put(getSmallestValueNotUsed(), position);
+	}
+
+	public int nulls() {
+		int n = 0;
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (getValue(new Pair(i, j))==null)
+					n++;
+			}
+		}
+		return n;
+	}
+
+	public Pair getIncorrection(int inc) {
+		int faults = 0;
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (!fixed(i, j) && !checkCorrect(i,j))
+					if (++faults == inc)
+						return new Pair(i, j);
+			}
+		}
+		return null;
 	}
 }

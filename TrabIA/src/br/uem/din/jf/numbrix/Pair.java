@@ -3,8 +3,6 @@ package br.uem.din.jf.numbrix;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import br.uem.din.jf.csp.Map;
-
 public class Pair {
 
 	private int x;

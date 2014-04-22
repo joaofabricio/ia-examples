@@ -1,8 +1,11 @@
-package br.uem.din.jf.csp;
+package br.uem.din.jf.csp.numbrix;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import br.uem.din.jf.csp.CSPSolution;
+import br.uem.din.jf.numbrix.Map;
 
 public class NumbrixSolution extends CSPSolution {
 
@@ -26,6 +29,11 @@ public class NumbrixSolution extends CSPSolution {
 			list.add(next);
 		}
 		return list;
+	}
+	
+	@Override
+	public String toString() {
+		return map.toString();
 	}
 
 }

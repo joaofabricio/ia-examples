@@ -1,7 +1,11 @@
-package br.uem.din.jf.csp;
+package br.uem.din.jf.astar.main;
 
 import java.io.File;
 
+import br.uem.din.jf.csp.CSP;
+import br.uem.din.jf.csp.CSPSolution;
+import br.uem.din.jf.csp.numbrix.NumbrixSolution;
+import br.uem.din.jf.numbrix.Map;
 import br.uem.din.jf.numbrix.NumbrixUtils;
 import br.uem.din.jf.util.FileUtils;
 
@@ -18,7 +22,7 @@ public class MainCSP {
 
 	private static CSPSolution getInitialSolution() {
 		String fileContents = FileUtils.getFileContents(new File("numbrix.txt"));
-		Map extractedCSPMap = NumbrixUtils.extractCSPMap(fileContents);
+		Map extractedCSPMap = NumbrixUtils.extractMap(fileContents);
 		NumbrixSolution n =  new NumbrixSolution(extractedCSPMap);
 		return n;
 	}
