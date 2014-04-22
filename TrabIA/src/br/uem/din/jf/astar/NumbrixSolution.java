@@ -1,9 +1,8 @@
-package br.uem.din.jf.astar.numbrix;
+package br.uem.din.jf.astar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.uem.din.jf.astar.SearchSpace;
 import br.uem.din.jf.numbrix.Map;
 
 public class NumbrixSolution extends SearchSpace<NumbrixSolution> {

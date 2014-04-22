@@ -8,8 +8,8 @@ import java.util.Random;
 public class GeneticAlgorithm<T extends Individual<T>> {
 
 	private PriorityQueue<T> population;
-	private int maxGenerations = 999999;
-	private int maxStagnation = 99999;
+	private int maxGenerations = 2000000;
+	private int maxStagnation = 350000;
 	private int stagnation = 0;
 	private int generation = 0;
 

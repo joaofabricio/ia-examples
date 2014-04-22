@@ -1,11 +1,11 @@
-package br.uem.din.jf.astar.main;
+package br.uem.din.jf.main;
 
 import java.io.File;
 import java.util.List;
 import java.util.PriorityQueue;
 
 import br.uem.din.jf.genetic.GeneticAlgorithm;
-import br.uem.din.jf.genetic.numbrix.NumbrixSolution;
+import br.uem.din.jf.genetic.NumbrixSolution;
 import br.uem.din.jf.numbrix.Map;
 import br.uem.din.jf.numbrix.NumbrixUtils;
 import br.uem.din.jf.util.FileUtils;
@@ -13,7 +13,7 @@ import br.uem.din.jf.util.FileUtils;
 public class NumbrixMainGenetic {
 
 	public static void main(String[] args) {
-		String numbrixStr = FileUtils.getFileContents(new File("numbrix.txt"));
+		String numbrixStr = FileUtils.getFileContents(new File(args[0]));
 		
 		Map initialMap = NumbrixUtils.extractMap(numbrixStr);
 		

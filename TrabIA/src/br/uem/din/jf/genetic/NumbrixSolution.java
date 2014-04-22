@@ -1,10 +1,9 @@
-package br.uem.din.jf.genetic.numbrix;
+package br.uem.din.jf.genetic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import br.uem.din.jf.genetic.Individual;
 import br.uem.din.jf.numbrix.Map;
 import br.uem.din.jf.numbrix.Pair;
 

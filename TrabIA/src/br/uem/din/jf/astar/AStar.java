@@ -17,7 +17,7 @@ public class AStar<T extends SearchSpace<T>> {
 		while (A.size() != 0) {
 			T v = A.remove();
 			F.add(v);
-			
+			System.out.println(v);
 			if (v.hasBestSolution()) {
 				System.out.println("Nós produzidos: "+count);
 				System.out.println("Nós visitados: "+F.size());

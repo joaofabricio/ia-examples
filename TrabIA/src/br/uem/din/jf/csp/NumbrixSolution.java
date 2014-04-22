@@ -1,10 +1,9 @@
-package br.uem.din.jf.csp.numbrix;
+package br.uem.din.jf.csp;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import br.uem.din.jf.csp.CSPSolution;
 import br.uem.din.jf.numbrix.Map;
 
 public class NumbrixSolution extends CSPSolution {
